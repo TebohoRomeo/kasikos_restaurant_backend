@@ -20,10 +20,9 @@ const pool = new Pool({
   port: 5432,                                   // explicitly set port
   // Add this line to force IPv4 lookup
   keepAlive: true,
-
   // optionally tune pool size etc
-  // max: 20,
-  // idleTimeoutMillis: 30000
+  max: 20,
+  idleTimeoutMillis: 30000
 });
 
 async function getClient() {
