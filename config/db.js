@@ -15,7 +15,12 @@ require('dotenv').config();
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-//   ssl: { rejectUnauthorized: false },
+  ssl: { rejectUnauthorized: false },
+  host: 'db.xsiixlvjgwcdlwvnlotp.supabase.co', // explicitly set host
+  port: 5432,                                   // explicitly set port
+  // Add this line to force IPv4 lookup
+  keepAlive: true,
+
   // optionally tune pool size etc
   // max: 20,
   // idleTimeoutMillis: 30000
