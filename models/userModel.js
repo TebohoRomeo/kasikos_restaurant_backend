@@ -2,7 +2,7 @@ const { pool } = require('../config/db');
 
 async function createUser({ firstname, lastname, email, passwordHash }, client = null) {
   const q = `
-    INSERT INTO users (firstname, lastname, email, password_hash)
+    INSERT INTO kasikosdb (firstname, lastname, email, password_hash)
     VALUES ($1, $2, $3, $4)
     RETURNING id, firstname, lastname, email, created_at
   `;
@@ -13,13 +13,13 @@ async function createUser({ firstname, lastname, email, passwordHash }, client =
 }
 
 async function findByEmail(email) {
-  const res = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+  const res = await pool.query('SELECT * FROM kasikosdb WHERE email = $1', [email]);
   return res.rows[0];
 }
 
 async function findById(id) {
   const res = await pool.query(
-    'SELECT id, firstname, lastname, email, created_at FROM users WHERE id = $1',
+    'SELECT id, firstname, lastname, email, created_at FROM kasikosdb WHERE id = $1',
     [id]
   );
   return res.rows[0];
