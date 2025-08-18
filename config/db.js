@@ -9,7 +9,7 @@ const pool = new Pool({
   // Add this line to force IPv4 lookup
   keepAlive: true,
   // optionally tune pool size etc
-  max: 20,
+  max: 15,
   idleTimeoutMillis: 30000
 });
 
