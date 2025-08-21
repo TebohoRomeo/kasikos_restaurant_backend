@@ -22,22 +22,10 @@ async function signup(req, res, next) {
       storeName,
       moduleType,
       address,
-      vat,
+      // vat,
       // openingTime,
     } = req.body;
 
-    console.log(
-      firstname,
-      lastname,
-      email,
-      password,
-      storeName,
-      moduleType,
-      address,
-      vat,
-      // openingTime,
-      "hows my data"
-    );
 
     if (
       !firstname ||
@@ -45,6 +33,7 @@ async function signup(req, res, next) {
       !email ||
       !password ||
       !storeName ||
+      !moduleType ||
       !address
     ) {
       client.release();
@@ -67,7 +56,6 @@ async function signup(req, res, next) {
     const passwordHash = await bcrypt.hash(password, 12);
 
     await client.query("BEGIN");
-    
 
     const user = await createUser(
       {
@@ -89,8 +77,8 @@ async function signup(req, res, next) {
         coverKey: coverRes ? coverRes.key : null,
         moduleType,
         address,
-        vat,
-        openingTime,
+        // vat,
+        // openingTime,
       },
       client
     );

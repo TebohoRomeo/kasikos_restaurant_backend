@@ -6,7 +6,7 @@ const authRoutes = require('./routes/authRoutes');
 const menuRoutes = require('./routes/menuRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
-const deliveryRoutes = require('./routes/deliveryRoutes');
+// const deliveryRoutes = require('./routes/deliveryRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 
 const errorHandler = require('./middleware/errorMiddleware');
@@ -23,9 +23,8 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 // mount routes
 app.use('/api/auth', authRoutes);
 app.use('/api/menus', menuRoutes);
-app.use('/api/orders', orderRoutes);
+// app.use('/api/orders', orderRoutes);
 app.use('/api/payments', paymentRoutes);
-app.use('/api/delivery', deliveryRoutes);
 app.use('/api/reviews', reviewRoutes);
 
 // health
