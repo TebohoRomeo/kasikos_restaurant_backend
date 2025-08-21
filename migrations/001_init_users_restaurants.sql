@@ -1,5 +1,5 @@
 -- users & restaurants base
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS kasikos_owners (
   id SERIAL PRIMARY KEY,
   fristname VARCHAR(100) NOT NULL,
   lastname VARCHAR(100) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS restaurants (
+CREATE TABLE IF NOT EXISTS kasikos_restaurants (
   id SERIAL PRIMARY KEY,
   owner_id INT REFERENCES users(id) ON DELETE CASCADE,
   store_name VARCHAR(150) NOT NULL,

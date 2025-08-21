@@ -4,7 +4,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { pool } = require('../src/config/db');
+const { pool } = require('../config/db');
 
 async function run() {
   const migrationsDir = path.join(process.cwd(), 'migrations');

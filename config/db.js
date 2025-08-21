@@ -4,7 +4,7 @@ require('dotenv').config();
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
-  host: 'db.nrxjixidnqbgvehvxbxq.supabase.co', // explicitly set host
+  host: 'dpg-d2ioo33uibrs73a3cb90-a.oregon-postgres.render.com', // explicitly set host
   port: 5432,                                   // explicitly set port
   // Add this line to force IPv4 lookup
   keepAlive: true,

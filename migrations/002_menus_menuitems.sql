@@ -1,12 +1,3 @@
-CREATE TABLE IF NOT EXISTS menus (
-  id SERIAL PRIMARY KEY,
-  restaurant_id INT NOT NULL REFERENCES restaurants(id) ON DELETE CASCADE,
-  title VARCHAR(150) NOT NULL,
-  description TEXT,
-  is_active BOOLEAN DEFAULT TRUE,
-  created_at TIMESTAMP DEFAULT NOW()
-);
-
 CREATE TABLE IF NOT EXISTS menu_items (
   id SERIAL PRIMARY KEY,
   menu_id INT NOT NULL REFERENCES menus(id) ON DELETE CASCADE,
