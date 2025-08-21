@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS payments (
 
 CREATE TABLE IF NOT EXISTS orders (
   id SERIAL PRIMARY KEY,
-  restaurant_id INT REFERENCES restaurants(id) ON DELETE SET NULL,
-  user_id INT REFERENCES users(id) ON DELETE SET NULL,
+  restaurant_id INT REFERENCES kasikos_restaurants(id) ON DELETE SET NULL,
+  user_id INT REFERENCES kasikos_owner(id) ON DELETE SET NULL,
   total_amount NUMERIC(10,2) NOT NULL,
   currency VARCHAR(10) DEFAULT 'USD',
   status order_status DEFAULT 'pending',

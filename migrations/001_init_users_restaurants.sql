@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS kasikos_owners (
 
 CREATE TABLE IF NOT EXISTS kasikos_restaurants (
   id SERIAL PRIMARY KEY,
-  owner_id INT REFERENCES users(id) ON DELETE CASCADE,
+  owner_id INT REFERENCES kasikos_owner(id) ON DELETE CASCADE,
   store_name VARCHAR(150) NOT NULL,
   logo_url TEXT,
   logo_key TEXT,
