@@ -1,23 +1,31 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-const { pool } = require('./config/db');
+const helmet = require('helmet');
+const cors = require('cors');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const authRoutes = require('./src/routes/authRoutes');
+const menuRoutes = require('./src/routes/menuRoutes');
+const paymentRoutes = require('./src/routes/paymentRoutes');
+const reviewRoutes = require('./src/routes/reviewRoutes');
+const { apiLimiter } = require('./src/middleware/rateLimit.js');
 
-const authRoutes = require('./routes/authRoutes');
-const menuRoutes = require('./routes/menuRoutes');
-const orderRoutes = require('./routes/orderRoutes');
-const paymentRoutes = require('./routes/paymentRoutes');
-// const deliveryRoutes = require('./routes/deliveryRoutes');
-const reviewRoutes = require('./routes/reviewRoutes');
-
-
-const errorHandler = require('./middleware/errorMiddleware');
+const errorHandler = require('./src/middleware/errorMiddleware');
 
 const app = express();
 
 // parse JSON bodies (except for payment webhooks which expect raw)
-app.use(express.json());
+app.use(express.json({ limit: '50kb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(cors({ origin: process.env.CORS_ORIGIN || true, credentials: true }));
+app.use(cookieParser());
+app.use(apiLimiter);
+app.use(morgan('dev'));
+
+// Stripe webhook route must use raw body
+app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
 
 // serve uploads in dev; in production use CDN
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
@@ -30,17 +38,6 @@ app.use('/api/reviews', reviewRoutes);
 
 // health
 app.get('/health', (req, res) => res.json({ ok: true }));
-
-app.get('/test-db', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT NOW()');
-    console.log('DB Time:', res.rows[0]);
-    res.json({ time: result.rows[0].now });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'DB connection failed' });
-  }
-});
 // error handler (last)
 app.use(errorHandler);
 

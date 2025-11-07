@@ -1,0 +1,9 @@
+FROM node:20-alpine
+WORKDIR /app
+RUN apk add --no-cache python3 build-base
+COPY package*.json ./
+RUN npm ci --production
+COPY . .
+RUN mkdir -p uploads
+EXPOSE 3000
+CMD ["node", "src/server.js"]

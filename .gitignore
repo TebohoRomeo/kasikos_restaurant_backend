@@ -5,7 +5,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # Environment variables
-.env
+.env/
+.env.example
 .env.local
 .env.*.local
 
@@ -13,10 +14,13 @@ yarn-error.log*
 logs
 *.log
 logs/*.log
+.github
+.github/
 
 # Build output
 dist/
 build/
+node_modules/
 
 # Ionic / Angular
 www/
