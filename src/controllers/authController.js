@@ -14,6 +14,7 @@ async function signup(req, res, next) {
       firstname,
       lastname,
       email,
+      phones,
       password,
       storeName,
       moduleType,
@@ -26,6 +27,7 @@ async function signup(req, res, next) {
       !firstname ||
       !lastname ||
       !email ||
+      !phones ||
       !password ||
       !storeName ||
       !moduleType ||
@@ -58,6 +60,7 @@ async function signup(req, res, next) {
         firstname,
         lastname,
         email,
+        phones,
         passwordHash,
       },
       client
@@ -148,6 +151,16 @@ async function login(req, res, next) {
   }
 }
 
+export async function updateProfile(req, res, next){
+  try {
+    const { firstname, lastname, email, phones } = req.body;
+    const check = await pool.query('SELECT id FROM users WHERE email=$1', [email]);
+    if (check.rows[0] && check.rows[0].id !== req.user.id) return res.status(409).json({ error:'Email already in use' });
+    const upd = await pool.query('UPDATE users SET firstname=$1, lastname=$2, email=$3, phones=$4 WHERE id=$5 RETURNING id, firstname, lastname, email, phones', [firstname, lastname, email, phones || null, req.user.id]);
+    return res.json({ user: upd.rows[0] });
+  } catch(err){ next(err); }
+}
+
 async function forgotPassword(req, res, next) {
   try {
     const { email } = req.body;
@@ -181,6 +194,20 @@ async function forgotPassword(req, res, next) {
   } catch (err) {
     next(err);
   }
+}
+
+export async function changePassword(req, res, next){
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const user = (await pool.query('SELECT id, password_hash FROM users WHERE id=$1',[req.user.id])).rows[0];
+    if (!user) return res.status(404).json({ error:'User not found' });
+    const ok = await bcrypt.compare(currentPassword, user.password_hash);
+    if (!ok) return res.status(401).json({ error:'Current password incorrect' });
+    const hashedNewPassowrd = await bcrypt.hash(newPassword, 12);
+    await pool.query('UPDATE users SET password_hash=$1 WHERE id=$2', [hashedNewPassowrd, req.user.id]);
+    await pool.query('DELETE FROM refresh_tokens WHERE user_id=$1', [req.user.id]);
+    return res.json({ ok:true });
+  } catch(err){ next(err); }
 }
 
 async function resetPassword(req, res, next) {
@@ -233,6 +260,7 @@ async function refresh(req, res, next){
   } catch(err) { console.error(err); return res.status(401).json({ error: 'Invalid refresh token' }); }
 }
 
+
 async function logout(req, res, next){
   try {
     const token = req.cookies['refresh_token'];
@@ -245,4 +273,4 @@ async function logout(req, res, next){
   } catch(err) { next(err); }
 }
 
-module.exports = { signup, login, logout, refresh, forgotPassword, resetPassword };
+module.exports = { signup, login, logout, refresh, changePassword, forgotPassword, resetPassword };

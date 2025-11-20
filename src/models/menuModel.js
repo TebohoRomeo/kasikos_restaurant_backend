@@ -1,9 +1,17 @@
 import { pool } from '../config/db.js';
 
-export async function createMenuItem({ restaurantId, title, description, price, currency='USD', active=true }){
-  const q = `INSERT INTO menu_items (restaurant_id, title, description, price, currency, active)
-             VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`;
-  const res = await pool.query(q, [restaurantId, title, description || null, price, currency, active]);
+// export async function createMenuItem({ restaurantId, title, description, price, currency='USD', active=true }){
+//   const q = `INSERT INTO menu_items (restaurant_id, title, description, price, currency, active)
+//              VALUES ($1,$2,$3,$4,$5,$6) RETURNING *`;
+//   const res = await pool.query(q, [restaurantId, title, description || null, price, currency, active]);
+//   return res.rows[0];
+// }
+
+export async function createMenuItem({ menuId, name, description, price, prepTime, allergens, imageUrl, active=true }, client = null) {
+  const q = `INSERT INTO menu_items (menu_id, name, description, price, pret_time, allergens, image_url, active)
+             VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`;
+  const executor = client ? client.query.bind(client) : pool.query.bind(pool);
+  const res = await executor(q, [menuId, name, description, price || 'ZAR', prepTime, allergens, imageUrl || null, active]);
   return res.rows[0];
 }
 

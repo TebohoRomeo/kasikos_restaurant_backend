@@ -10,7 +10,7 @@ async function requireAuth(req, res, next) {
   try {
     const payload = verify(token);
     // fetch minimal user info if needed
-    const { rows } = await pool.query('SELECT id, firstname, lastname, email FROM kasikos_owner WHERE id = $1, $2, $3', [payload.id]);
+    const { rows } = await pool.query('SELECT id, firstname, lastname, email FROM users WHERE id = $1, $2, $3', [payload.id]);
     if (!rows[0]) return res.status(401).json({ error: 'Invalid token' });
     req.user = rows[0];
     next();

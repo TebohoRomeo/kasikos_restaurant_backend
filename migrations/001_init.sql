@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
   firstname VARCHAR(100) NOT NULL,
   lastname VARCHAR(100) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
-  phone VARCHAR(50),
+  phones VARCHAR(50),
   password_hash TEXT NOT NULL,
   role VARCHAR(20) NOT NULL DEFAULT 'owner',
   verified BOOLEAN DEFAULT FALSE,
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS menu_items (
   title VARCHAR(200) NOT NULL,
   description TEXT,
   price NUMERIC(10,2) NOT NULL,
-  currency VARCHAR(10) DEFAULT 'USD',
+  currency VARCHAR(10) DEFAULT 'ZAR',
   active BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
