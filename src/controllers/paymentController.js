@@ -15,5 +15,3 @@ export async function webhook(req, res, next) {
     res.status(200).json({ ok: true });
   } catch (err) { next(err); }
 }
-
-// module.exports = { webhook };
