@@ -1,5 +1,5 @@
-import { pool } from '../config/db.js';
-import { hashToken } from '../utils/token.js';
+const { pool } = require('../config/db.js');
+const { hashToken } = require('../utils/token.js');
 
 export async function verifyEmail(req, res, next){
   try {

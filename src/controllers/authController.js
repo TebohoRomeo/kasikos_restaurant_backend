@@ -20,7 +20,6 @@ async function signup(req, res, next) {
       moduleType,
       address,
       vat,
-      openingTime,
     } = req.body;
 
     if (
@@ -32,8 +31,7 @@ async function signup(req, res, next) {
       !storeName ||
       !moduleType ||
       !address ||
-      !vat ||
-      !openingTime
+      !vat
     ) {
       client.release();
       return res.status(400).json({ error: "Missing required fields" });
@@ -77,7 +75,6 @@ async function signup(req, res, next) {
         moduleType,
         address,
         vat,
-        openingTime,
       },
       client
     );

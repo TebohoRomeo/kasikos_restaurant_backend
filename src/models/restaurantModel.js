@@ -10,13 +10,12 @@ async function createRestaurant({
   moduleType,
   address,
   vat,
-  openingTime
 }, client = null) {
   const q = `
     INSERT INTO kostores
-      (owner_id, store_name, logo_url, logo_key, cover_url, cover_key, module_type, addressvat, opening_time)
+      (owner_id, store_name, logo_url, logo_key, cover_url, cover_key, module_type, address, vat)
     VALUES
-      ($1, $2, $3, $4, $5, $6, $7, $8)
+      ($1, $2, $3, $4, $5, $6, $7)
     RETURNING id, store_name, module_type, address, logo_url, cover_url, created_at
   `;
   const params = [
@@ -29,7 +28,6 @@ async function createRestaurant({
     moduleType,
     address,
     vat || null,
-    openingTime
 
   ];
   const executor = client ? client.query.bind(client) : pool.query.bind(pool);

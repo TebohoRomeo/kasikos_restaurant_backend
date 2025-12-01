@@ -11,7 +11,7 @@ async function createMenuItem(req, res, next) {
   try {
     const restaurantId = req.user.restaurant_id || req.user.restaurant_id;
     const { menuId } = req.params;
-    const { category, name, description, price, prepTime, allergens } = req.body;
+    const { category, name, description, price} = req.body;
 
     if (!name || !price)
       return res.status(400).json({ error: "name and price required" });
@@ -26,8 +26,6 @@ async function createMenuItem(req, res, next) {
       name,
       description,
       price,
-      prepTime,
-      allergens,
       imageUrl: uploaded ? uploaded.url : null,
     });
     res.status(201).json(item);

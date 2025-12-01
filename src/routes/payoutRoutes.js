@@ -1,9 +1,9 @@
-import express from 'express';
-import * as payoutCtrl from '../controllers/payoutController.js';
-import { requireAuth, requireRole } from '../middleware/authMiddleware.js';
+const express = require('express');
+const {requestWithdrawal, listWithdrawals } = require('../controllers/payoutController.js');
+const { requireAuth, requireRole } = require('../middleware/authMiddleware.js');
 const router = express.Router();
 
-router.post('/', requireAuth, requireRole('owner'), payoutCtrl.requestWithdrawal);
-router.get('/', requireAuth, requireRole('owner'), payoutCtrl.listWithdrawals);
+router.post('/', requireAuth, requireRole('owner'), requestWithdrawal);
+router.get('/', requireAuth, requireRole('owner'), listWithdrawals);
 
 export default router;

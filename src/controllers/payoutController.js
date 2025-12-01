@@ -1,5 +1,5 @@
-import { pool } from '../config/db.js';
-import { transferToConnectedAccount } from '../config/stripe.js';
+const { pool } = require('../config/db.js');
+const { transferToConnectedAccount } = require('../config/stripe.js');
 
 export async function requestWithdrawal(req, res, next){
   try {
