@@ -1,4 +1,4 @@
-const { listen } = require('../app');
+import { listen } from '../app';
 require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
