@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const reviewController = require('../controllers/reviewController');
-const { requireAuth } = require('../middleware/authMiddleware');
+// import { Router } from 'express';
+// const router = Router();
+// import { createReview, listReviews } from '../controllers/reviewController.js';
+// import { requireAuth } from '../middleware/authMiddleware.js';
 
-router.post('/:restaurantId', requireAuth, reviewController.createReview);
-router.get('/:restaurantId', reviewController.listReviews);
+// router.post('/:restaurantId', requireAuth, createReview);
+// router.get('/:restaurantId', listReviews);
 
-module.exports = router;
+// export default router;

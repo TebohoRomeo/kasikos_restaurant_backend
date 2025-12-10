@@ -1,5 +1,5 @@
-const { stripe } = require('../config/stripe.js');
-const { pool } = require('../config/db.js');
+import stripe from '../config/stripe.js'
+import { pool } from '../config/db.js';
 
 export async function webhook(req, res){
   const sig = req.headers['stripe-signature'];

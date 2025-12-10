@@ -1,4 +1,4 @@
-const { updatePaymentStatus } = require('../models/paymentModel');
+import { updatePaymentStatus } from '../models/paymentModel.js';
 
 /**
  * Webhook endpoint to receive provider updates.

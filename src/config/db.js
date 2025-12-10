@@ -1,7 +1,8 @@
-const { Pool } = require("pg");
-require("dotenv").config();
+import { Pool } from "pg";
+import dotenv from 'dotenv';
+dotenv.config();
 
-const pool = new Pool({
+export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
   host: "dpg-d2ioo33uibrs73a3cb90-a.oregon-postgres.render.com", // explicitly set host
@@ -13,14 +14,14 @@ const pool = new Pool({
   idleTimeoutMillis: 30000,
 });
 
-async function getClient() {
+export async function getClient() {
   const client = await pool.connect();
   console.log(client, "connecting to client");
 
   return client;
 }
 
-module.exports = {
-  pool,
-  getClient,
-};
+// export default {
+//   pool,
+//   getClient,
+// };

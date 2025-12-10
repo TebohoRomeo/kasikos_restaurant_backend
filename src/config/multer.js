@@ -1,15 +1,15 @@
-const multer = require('multer');
-const { v4: uuidv4 } = require('uuid');
-const path = require('path');
-const fs = require('fs');
+import multer, { diskStorage } from 'multer';
+import { v4 as uuidv4 } from 'uuid';
+import { join, extname } from 'path';
+import { existsSync, mkdirSync } from 'fs';
 
-const uploadDir = path.join(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+const uploadDir = join(process.cwd(), 'uploads');
+if (!existsSync(uploadDir)) mkdirSync(uploadDir);
 
-const storage = multer.diskStorage({
+const storage = diskStorage({
   destination: (req, file, cb) => cb(null, uploadDir),
   filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
+    const ext = extname(file.originalname);
     cb(null, `${uuidv4()}${ext}`);
   }
 });
@@ -26,4 +26,4 @@ const upload = multer({
   }
 });
 
-module.exports = upload;
+export default upload;

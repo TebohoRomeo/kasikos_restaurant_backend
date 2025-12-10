@@ -1,6 +1,6 @@
-const { pool } = require('../config/db');
+import { pool } from '../config/db.js';
 
-async function createRestaurant({
+export async function createRestaurant({
   ownerId,
   storeName,
   logoUrl,
@@ -35,9 +35,7 @@ async function createRestaurant({
   return res.rows[0];
 }
 
-async function getByOwnerId(ownerId) {
+export async function getByOwnerId(ownerId) {
   const res = await pool.query('SELECT * FROM kostores WHERE owner_id = $1', [ownerId]);
   return res.rows[0];
 }
-
-module.exports = { createRestaurant, getByOwnerId };

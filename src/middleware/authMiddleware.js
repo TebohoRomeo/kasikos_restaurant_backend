@@ -1,7 +1,7 @@
-const { verify } = require('../utils/jwt');
-const { pool } = require('../config/db');
+import { verify } from '../utils/jwt.js';
+import { pool } from '../config/db.js';
 
-async function requireAuth(req, res, next) {
+export async function requireAuth(req, res, next) {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'Unauthorized' });
@@ -20,7 +20,7 @@ async function requireAuth(req, res, next) {
 }
 
 // for endpoints that require the user to be an owner of a restaurant
-async function requireRestaurantOwner(req, res, next) {
+export async function requireRestaurantOwner(req, res, next) {
   // assume req.user already set
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
 
@@ -30,5 +30,3 @@ async function requireRestaurantOwner(req, res, next) {
   req.user.restaurant_id = rows[0].id;
   next();
 }
-
-module.exports = { requireAuth, requireRestaurantOwner };

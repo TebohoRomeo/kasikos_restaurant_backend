@@ -1,9 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const upload = require('../config/multer');
-const { signup, login,  } = require('../controllers/authController');
+import { Router } from 'express';
+const router = Router();
+import upload from '../config/multer.js';
 
-router.post('/signup', upload.fields([{ name: 'logo' }, { name: 'cover' }]), signup);
+import { signup, login } from '../controllers/authController.js';
+
+router.post('/signup', upload.fields([{ name: 'logo' }, { name: 'cover' }]), signup); 
 router.post('/login', login);
 
-module.exports = router;
+export default router;

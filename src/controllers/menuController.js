@@ -1,5 +1,5 @@
-const menuItemModel = require("../models/menuItemModel");
-const storageService = require("../services/storageService");
+import { createMenuItem as _createMenuItem, findByMenu } from "../models/menuItemModel.js";
+import { upload } from "../services/storageService.js";
 
 /**
  * POST /api/menus/:menuId/items
@@ -7,7 +7,7 @@ const storageService = require("../services/storageService");
  * single file: image
  */
 
-async function createMenuItem(req, res, next) {
+export async function createMenuItem(req, res, next) {
   try {
     const restaurantId = req.user.restaurant_id || req.user.restaurant_id;
     const { menuId } = req.params;
@@ -18,9 +18,9 @@ async function createMenuItem(req, res, next) {
 
     // handle file -> storage
     const file = req.file;
-    const uploaded = await storageService.upload(file);
+    const uploaded = await upload(file);
 
-    const item = await menuItemModel.createMenuItem({
+    const item = await _createMenuItem({
       menuId,
       category,
       name,
@@ -34,7 +34,7 @@ async function createMenuItem(req, res, next) {
   }
 }
 
-async function listMenus(req, res, next) {
+export async function listMenus(req, res, next) {
   // List all menu items of a restaurant
   try {
     const restaurantId = req.params.restaurantId || req.user.restaurant_id;
@@ -45,43 +45,35 @@ async function listMenus(req, res, next) {
   }
 }
 
-async function editMenuItem(req, res, next) {
+export async function editMenuItem(req, res, next) {
   // Must be able to edit menu item
   try {
     const { menuItemId } = req.params;
-    const items = await menuItemModel.findByMenu(menuItemId);
+    const items = await findByMenu(menuItemId);
     return res.json(items);
   } catch (err) {
     next(err);
   }
 }
 
-async function deleteMenuItem(req, res, next) {
+ export async function deleteMenuItem(req, res, next) {
   // Must be able to delete menu item
   try {
     const { menuItemId } = req.params;
-    const items = await menuItemModel.findByMenu(menuItemId);
+    const items = await findByMenu(menuItemId);
     return res.json(items);
   } catch (err) {
     next(err);
   }
 }
 
-async function disableMenuItem(req, res, next) {
+export async function disableMenuItem(req, res, next) {
   // 'disable item to show availability
   try {
     const { menuId } = req.params;
-    const items = await menuItemModel.findByMenu(menuId);
+    const items = await findByMenu(menuId);
     return res.json(items);
   } catch (err) {
     next(err);
   }
 }
-
-module.exports = {
-  createMenuItem,
-  listMenus,
-  editMenuItem,
-  deleteMenuItem,
-  disableMenuItem,
-};

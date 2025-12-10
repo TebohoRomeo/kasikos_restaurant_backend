@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const paymentController = require('../controllers/paymentController');
+import { Router, raw } from 'express';
+const router = Router();
+import { webhook } from '../controllers/paymentController.js';
 
-router.post('/webhook', express.raw({ type: '*/*' }), paymentController.webhook); // provider may require raw body
+router.post('/webhook', raw({ type: '*/*' }), webhook); // provider may require raw body
 
-module.exports = router;
+export default router;

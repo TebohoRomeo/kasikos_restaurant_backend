@@ -1,5 +1,5 @@
-const { pool } = require('../config/db.js');
-const bcrypt = require('bcrypt');
+import { pool } from '../config/db.js';
+import bcrypt from 'bcrypt';
 
 export async function updateProfile(req, res, next){
   try {

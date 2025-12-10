@@ -1,4 +1,4 @@
-const { pool } = require('../config/db.js');
+import { pool } from '../config/db.js';
 
 // export async function createMenuItem({ restaurantId, title, description, price, currency='USD', active=true }){
 //   const q = `INSERT INTO menu_items (restaurant_id, title, description, price, currency, active)
