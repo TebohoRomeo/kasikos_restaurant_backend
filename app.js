@@ -27,7 +27,7 @@ app.use(cors({ origin: process.env.CORS_ORIGIN || true, credentials: true }));
 app.use(cookieParser());
 app.use(apiLimiter);
 app.use(morgan('dev'));
-
+// https://kasikos-restaurant-backend.onrender.com
 // Stripe webhook route must use raw body
 app.use('/api/payments/webhook', raw({ type: 'application/json' }));
 

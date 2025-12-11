@@ -1,18 +1,17 @@
 import { Pool } from "pg";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
+
+const isProduction = process.env.NODE_ENV === "production";
 
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
-  host: "dpg-d2ioo33uibrs73a3cb90-a.oregon-postgres.render.com", // explicitly set host
-  port: 5432, // explicitly set port
-  // Add this line to force IPv4 lookup
-  keepAlive: true,
-  // optionally tune pool size etc
+  ssl: isProduction ? { rejectUnauthorized: false } : false,
   max: 15,
   idleTimeoutMillis: 30000,
+  keepAlive: true,
 });
+
 
 export async function getClient() {
   const client = await pool.connect();
